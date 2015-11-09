@@ -20,8 +20,8 @@
         <h1>Cadastro</h1>
         <form name="form-cadastro" method="POST" action="Login" >
             <input type="hidden" name="acao" value="cadastro" />
-            <label>Usuário:</label>
-            <input type="text" name="usuario" value="" />
+            <label>Apelido:</label>
+            <input type="text" name="apelido" value="" />
             <br />
             <label>E-mail:</label>
             <input type="text" name="email" value="" />

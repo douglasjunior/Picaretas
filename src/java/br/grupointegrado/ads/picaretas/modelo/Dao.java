@@ -21,11 +21,11 @@ public abstract class Dao<T> {
         this.conexao = conexao;
     }
 
-    public abstract void inserir(T objeto);
+    public abstract void inserir(T objeto) throws SQLException;
 
-    public abstract void remover(T objeto);
+    public abstract void remover(T objeto) throws SQLException;
 
-    public abstract void atualizar(T objeto);
+    public abstract void atualizar(T objeto) throws SQLException;
 
     /**
      * Método genérico para executar comandos no banco de dados. (INSERT,
@@ -82,5 +82,5 @@ public abstract class Dao<T> {
      * @param resultado
      * @return
      */
-    public abstract T montaObjeto(ResultSet resultado);
+    public abstract T montaObjeto(ResultSet resultado) throws SQLException;
 }

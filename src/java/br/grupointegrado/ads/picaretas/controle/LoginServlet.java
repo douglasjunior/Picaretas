@@ -1,6 +1,9 @@
 package br.grupointegrado.ads.picaretas.controle;
 
+import br.grupointegrado.ads.picaretas.modelo.Usuario;
+import br.grupointegrado.ads.picaretas.modelo.UsuarioDao;
 import java.io.IOException;
+import java.sql.Connection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +53,20 @@ public class LoginServlet extends HttpServlet {
      */
     private void cadastro(HttpServletRequest req, HttpServletResponse resp) {
         try {
-
+            // recupero os parâmetros do formulário
+            String apelido = req.getParameter("apelido");
+            String email = req.getParameter("email");
+            String senha = req.getParameter("senha");
+            // crio um novo objeto com os parâmetros vindos do formulário
+            Usuario usuario = new Usuario();
+            usuario.setApelido(apelido);
+            usuario.setEmail(email);
+            usuario.setSenha(senha);
+            // recupero a conexão aberta pelo filtro
+            Connection conexao = (Connection) req.getAttribute("conexao");
+            // crio uma instância do DAO
+            UsuarioDao dao = new UsuarioDao(conexao);
+            dao.inserir(usuario);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
