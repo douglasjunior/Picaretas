@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -37,11 +38,29 @@ public class LoginServlet extends HttpServlet {
      * @param req
      * @param resp
      */
-    private void login(HttpServletRequest req, HttpServletResponse resp) {
+    private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
+            String apelido = req.getParameter("apelido");
+            String senha = req.getParameter("senha");
 
+            Connection conexao = (Connection) req.getAttribute("conexao");
+            UsuarioDao dao = new UsuarioDao(conexao);
+
+            Usuario usuario = dao.consultaEmailSenha(apelido, senha);
+            if (usuario != null) {
+                // logado
+                HttpSession sessao = req.getSession();
+                sessao.setAttribute("usuario_logado", usuario);
+                resp.sendRedirect("Consulta");
+            } else {
+                // usuário ou senha incorretos
+                req.setAttribute("mensagem_erro", "Apelido/e-mail ou senha incorretos.");
+                doGet(req, resp);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
+            req.setAttribute("mensagem_erro", "Ocorreu um erro inesperado.");
+            doGet(req, resp);
         }
     }
 
@@ -51,7 +70,7 @@ public class LoginServlet extends HttpServlet {
      * @param req
      * @param resp
      */
-    private void cadastro(HttpServletRequest req, HttpServletResponse resp) {
+    private void cadastro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             // recupero os parâmetros do formulário
             String apelido = req.getParameter("apelido");
@@ -69,6 +88,8 @@ public class LoginServlet extends HttpServlet {
             dao.inserir(usuario);
         } catch (Exception ex) {
             ex.printStackTrace();
+            req.setAttribute("mensagem_erro", "Ocorreu um erro inesperado.");
+            doGet(req, resp);
         }
     }
 }
