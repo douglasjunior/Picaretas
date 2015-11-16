@@ -26,6 +26,8 @@ public abstract class Dao<T> {
     public abstract void remover(T objeto) throws SQLException;
 
     public abstract void atualizar(T objeto) throws SQLException;
+    
+    public abstract T consultaId(int... ids) throws SQLException;
 
     /**
      * Método genérico para executar comandos no banco de dados. (INSERT,

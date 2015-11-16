@@ -77,9 +77,22 @@ public class UsuarioDao extends Dao<Usuario> {
                 apelidoEmail);
 
         // se a lista está vazia, então retorna nulo
-        if (usuarios.isEmpty())
+        if (usuarios.isEmpty()) {
             return null;
+        }
         // se existem objetos na lista, então retorna o primeiro
+        return usuarios.get(0);
+    }
+
+    public Usuario consultaId(int... ids) throws SQLException {
+        String sql = "SELECT * FROM usuario WHERE id = ?";
+
+        List<Usuario> usuarios = consultaSql(sql, ids[0]);
+
+        if (usuarios.isEmpty()) {
+            return null;
+        }
+
         return usuarios.get(0);
     }
 }

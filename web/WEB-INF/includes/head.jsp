@@ -7,4 +7,7 @@
         font-weight: bold;
         font-size: 20px;
     }
+    table { border-collapse: collapse; }
+    table, th, td { border: 1px solid black; }
+    th, td { padding: 5px; }
 </style>    

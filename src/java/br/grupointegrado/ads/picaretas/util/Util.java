@@ -1,5 +1,6 @@
 package br.grupointegrado.ads.picaretas.util;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -70,6 +71,23 @@ public class Util {
             long milisegundos = data.getTime();
             java.sql.Date sqlDate = new java.sql.Date(milisegundos);
             return sqlDate;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Converte objeto Date para Timestamp
+     *
+     * @param data
+     * @return
+     */
+    public static Timestamp dataParaTimestamp(Date data) {
+        try {
+            long milisegundos = data.getTime();
+            Timestamp time = new Timestamp(milisegundos);
+            return time;
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
