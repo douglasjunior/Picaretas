@@ -1,6 +1,7 @@
 package br.grupointegrado.ads.picaretas.util;
 
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -92,5 +93,17 @@ public class Util {
             ex.printStackTrace();
             return null;
         }
+    }
+    
+    private static DecimalFormat decimalFormat = new DecimalFormat("#,###,###,##0.00"); // dd/MM/yyyy
+    
+    public static String doubleParaString(double valor){
+        return decimalFormat.format(valor);
+    }
+    
+    private static SimpleDateFormat formataDataHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    
+    public static String dataHoraParaString(Date dataHora){
+        return formataDataHora.format(dataHora);
     }
 }

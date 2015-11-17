@@ -62,10 +62,11 @@ public class ProdutoDao extends Dao<Produto> {
         p.setDescricao(resultado.getString("descricao"));
         p.setDetalhes(resultado.getString("detalhes"));
         p.setValor(resultado.getFloat("valor"));
-        p.setCategoria(null);
         p.setDataPostagem(resultado.getTimestamp("data_postagem"));
         p.setVendido(resultado.getBoolean("vendido"));
 
+        p.setCategoria(new Categoria());
+        
         UsuarioDao usuarioDao = new UsuarioDao(conexao);
         Usuario usuario = usuarioDao.consultaId(resultado.getInt("id_usuario"));
         p.setUsuario(usuario);
