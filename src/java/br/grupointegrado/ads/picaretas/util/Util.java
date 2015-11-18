@@ -2,8 +2,11 @@ package br.grupointegrado.ads.picaretas.util;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Util {
 
@@ -96,6 +99,22 @@ public class Util {
     }
     
     private static DecimalFormat decimalFormat = new DecimalFormat("#,###,###,##0.00"); // dd/MM/yyyy
+    
+    /**
+     * Converte uma string formatada para float.
+     * Exemplo: String "12,65" para float 12.65
+     * 
+     * @param valor
+     * @return 
+     */
+    public static float stringFormatadaParaFloat(String valor){
+        try {
+            return decimalFormat.parse(valor).floatValue();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return 0;
+        }
+    }
     
     public static String doubleParaString(double valor){
         return decimalFormat.format(valor);

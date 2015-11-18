@@ -16,6 +16,8 @@
         <% if (mensagemErro != null) {%>
         <p class="erro"><%= mensagemErro%></p>
         <% }%>
+        <button onclick="window.location='Produto'">Anunciar</button>
+        <br /><br />
         <form method="GET" action="Consulta" >
             <label>Busca:</label>
             <input type="text" name="busca" value="" />

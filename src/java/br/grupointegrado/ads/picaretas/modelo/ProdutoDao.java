@@ -54,10 +54,12 @@ public class ProdutoDao extends Dao<Produto> {
                 objeto.getId());
     }
 
+    private CategoriaDao categoriaDao = new CategoriaDao(conexao);
+    private UsuarioDao usuarioDao = new UsuarioDao(conexao);
+
     @Override
     public Produto montaObjeto(ResultSet resultado) throws SQLException {
         Produto p = new Produto();
-
         p.setId(resultado.getInt("id"));
         p.setDescricao(resultado.getString("descricao"));
         p.setDetalhes(resultado.getString("detalhes"));
@@ -65,9 +67,9 @@ public class ProdutoDao extends Dao<Produto> {
         p.setDataPostagem(resultado.getTimestamp("data_postagem"));
         p.setVendido(resultado.getBoolean("vendido"));
 
-        p.setCategoria(new Categoria());
-        
-        UsuarioDao usuarioDao = new UsuarioDao(conexao);
+        Categoria categoria = categoriaDao.consultaId(resultado.getInt("id_categoria"));
+        p.setCategoria(categoria);
+
         Usuario usuario = usuarioDao.consultaId(resultado.getInt("id_usuario"));
         p.setUsuario(usuario);
 
