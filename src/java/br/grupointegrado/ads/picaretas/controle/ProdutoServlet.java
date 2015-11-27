@@ -6,6 +6,7 @@ import br.grupointegrado.ads.picaretas.modelo.Produto;
 import br.grupointegrado.ads.picaretas.modelo.ProdutoDao;
 import br.grupointegrado.ads.picaretas.modelo.Usuario;
 import br.grupointegrado.ads.picaretas.util.Util;
+import br.grupointegrado.ads.picaretas.util.ValidacaoUtil;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -43,13 +44,19 @@ public class ProdutoServlet extends HttpServlet {
         try {
             String idParam = req.getParameter("id");
             int id = Util.stringParaInt(idParam);
-            // verifica se o ID foi informado para decidir entre cadastro e alteração
-            if (id > 0) {
-                alterar(req, resp, id);
+            String erro = validaFormulario(req, resp);
+            if (erro.isEmpty()) {
+                // verifica se o ID foi informado para decidir entre cadastro e alteração
+                if (id > 0) {
+                    alterar(req, resp, id);
+                } else {
+                    cadastrar(req, resp);
+                }
+                resp.sendRedirect("Consulta");
             } else {
-                cadastrar(req, resp);
+                req.setAttribute("mensagem_erro", erro);
+                doGet(req, resp);
             }
-            resp.sendRedirect("Consulta");
         } catch (Exception ex) {
             ex.printStackTrace();
             req.setAttribute("mensagem_erro", "Não foi possível publicar o produto.");
@@ -66,24 +73,52 @@ public class ProdutoServlet extends HttpServlet {
         String descricaoParam = req.getParameter("descricao");
         String detalhesParam = req.getParameter("detalhes");
         float valorParam = Util.stringFormatadaParaFloat(req.getParameter("valor"));
-        
+
         Produto prod = new Produto();
         prod.setDescricao(descricaoParam);
         prod.setDetalhes(detalhesParam);
         prod.setValor(valorParam);
         prod.setVendido(false);
         prod.setDataPostagem(new Date());
-        
+
         Connection conexao = (Connection) req.getAttribute("conexao");
-        
+
         CategoriaDao categoriaDao = new CategoriaDao(conexao);
         Categoria cat = categoriaDao.consultaId(categoriaParam);
         prod.setCategoria(cat);
-        
+
         Usuario usuario = (Usuario) req.getSession().getAttribute("usuario_logado");
         prod.setUsuario(usuario);
-        
+
         ProdutoDao dao = new ProdutoDao(conexao);
         dao.inserir(prod);
-    }   
+    }
+
+    private String validaFormulario(HttpServletRequest req, HttpServletResponse resp) {
+        String erro = "";
+        
+        int categoriaParam = Util.stringParaInt(req.getParameter("categoria"));
+        if (categoriaParam == 0) {
+            erro += "Selecione uma categoria!<br />";
+        }
+        
+        String descricaoParam = req.getParameter("descricao");
+        if (!ValidacaoUtil.validaString(descricaoParam, 3)) {
+            erro += "Necessário uma descrição com mais de três caracteres!<br />";
+        } else if (!ValidacaoUtil.validaStringMaximo(descricaoParam, 50)) {
+            erro += "Campo Descrição superior a 50 caracteres!<br />";
+        }
+        
+        String detalhesParam = req.getParameter("detalhes");
+        if (!ValidacaoUtil.validaStringMaximo(detalhesParam, 1000)) {
+            erro += "Campo Detalhes superior a 1000 caracteres!<br />";
+        }
+        
+        float valorParam = Util.stringFormatadaParaFloat(req.getParameter("valor"));
+        if (!ValidacaoUtil.validaNumeroNegativo(valorParam)) {
+            erro += "Valor negativo!<br />";
+        }
+        
+        return erro;
+    }
 }
