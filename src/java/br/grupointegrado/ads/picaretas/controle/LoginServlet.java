@@ -19,30 +19,20 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         /**
-         * recuperando o parametro e o comparando,
-         * se igual a sair  envalidar a sessao e dispachar o request para o loginServlet 
+         * recuperando o parametro e o comparando, se igual a sair envalidar a
+         * sessao e dispachar o request para o loginServlet
          */
-        
+
         String sair = req.getParameter("acao");
         if ("sair".equals(sair)) {
-           HttpSession sessao = req.getSession();
-           sessao.invalidate();    
-    }
+            HttpSession sessao = req.getSession();
+            sessao.invalidate();
+        }
         req.getRequestDispatcher("/WEB-INF/paginas/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        
-            String ape = (String) req.getParameter("apelido"); //amc
-            String sen = (String) req.getParameter("senha");    //amc
-            HttpSession sessao = req.getSession();              //amc
-            req.setAttribute("ape", ape);                       //amc    
-            req.setAttribute("sen", sen);                       //amc
-            
-        
-        
-        
         String acaoParam = req.getParameter("acao");
         if ("login".equals(acaoParam)) {
             login(req, resp);
@@ -58,6 +48,10 @@ public class LoginServlet extends HttpServlet {
      * @param resp
      */
     private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String ape = (String) req.getParameter("apelido");
+        String sen = (String) req.getParameter("senha");
+        req.setAttribute("ape", ape);
+        req.setAttribute("sen", sen);
         try {
             String apelido = req.getParameter("apelido");
             String senha = req.getParameter("senha");
