@@ -1,7 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
+    String ape = "apeent";  //amc
+    String sen = "senent";  //amc
     String mensagemErro = (String) request.getAttribute("mensagem_erro");
+     if (mensagemErro != null){
+         ape = (String) request.getAttribute("ape");
+         sen = (String) request.getAttribute("sen");
+     }
 %>
 <html>
     <head>
@@ -16,10 +22,10 @@
         <form name="form-login" method="POST" action="Login" >
             <input type="hidden" name="acao" value="login" />
             <label>Apelido/E-mail:</label>
-            <input type="text" name="apelido" value="" />
+           <input type="text" name="apelido" value="<%= ape %>" />
             <br />
             <label>Senha:</label>
-            <input type="password" name="senha" value="" />
+            <input type="text" name="senha" value="<%= sen %>" />  
             <br />
             <input type="submit" value="Entrar" />
         </form>

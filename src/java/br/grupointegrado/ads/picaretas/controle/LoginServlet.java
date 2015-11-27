@@ -24,6 +24,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
+            String ape = (String) req.getParameter("apelido"); //amc
+            String sen = (String) req.getParameter("senha");    //amc
+            HttpSession sessao = req.getSession();              //amc
+            req.setAttribute("ape", ape);                       //amc    
+            req.setAttribute("sen", sen);                       //amc
+            
+        
+        
+        
         String acaoParam = req.getParameter("acao");
         if ("login".equals(acaoParam)) {
             login(req, resp);
