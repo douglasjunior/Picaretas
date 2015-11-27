@@ -62,4 +62,8 @@ public class ValidacaoUtil {
 
         return validaString(senha, 8) && pl.matcher(senha).find() && pn.matcher(senha).find();
     }
+    
+    public static boolean validaNumeroNegativo(Float valor) {
+        return valor >= 0;
+    }
 }
