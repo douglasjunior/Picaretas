@@ -19,6 +19,17 @@ public class ValidacaoUtil {
     public static boolean validaString(String string, int tamanhoMinimo) {
         return string != null && string.trim().length() >= tamanhoMinimo;
     }
+    
+    /**
+     * Faz a validação de uma String retornando true ou false.
+     * Valida o tamanho máximo da String.
+     * @param string
+     * @param tamanhoMaximo
+     * @return 
+     */
+    public static boolean validaStringMaximo(String string, int tamanhoMaximo) {
+        return string.trim().length() <= tamanhoMaximo;
+    }
 
     /**
      * Faz a validação do e-mail utilizando expressão regular. <br>
