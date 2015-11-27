@@ -12,6 +12,7 @@
         <title>Produto</title>
     </head>
     <body>
+        <%@include file="/WEB-INF/includes/logout.jsp"%>
         <h1>Produto</h1>
         <% if (mensagemErro != null) {%>
         <p class="erro"><%= mensagemErro%></p>
