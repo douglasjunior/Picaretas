@@ -18,7 +18,16 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        /**
+         * recuperando o parametro e o comparando,
+         * se igual a sair  envalidar a sessao e dispachar o request para o loginServlet 
+         */
+        
+        String sair = req.getParameter("acao");
+        if ("sair".equals(sair)) {
+           HttpSession sessao = req.getSession();
+           sessao.invalidate();    
+    }
         req.getRequestDispatcher("/WEB-INF/paginas/login.jsp").forward(req, resp);
     }
 

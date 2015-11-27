@@ -12,11 +12,12 @@
         <title>Consulta de produtos</title>
     </head>
     <body>
+        <%@include file="/WEB-INF/includes/logout.jsp"%>
         <h1>Consulta de produtos</h1>
         <% if (mensagemErro != null) {%>
         <p class="erro"><%= mensagemErro%></p>
         <% }%>
-        <button onclick="window.location='Produto'">Anunciar</button>
+        <button onclick="window.location = 'Produto'">Anunciar</button>
         <br /><br />
         <form method="GET" action="Consulta" >
             <label>Busca:</label>
@@ -38,10 +39,10 @@
             %>
             <tr>
                 <td>imagem</td>
-                <td><%= prod.getDescricao() %></td>
-                <td><%= prod.getValorString() %></td>
-                <td><%= prod.getCategoria().getDescricao() %></td>
-                <td><%= prod.getDataPostagemString() %></td>
+                <td><%= prod.getDescricao()%></td>
+                <td><%= prod.getValorString()%></td>
+                <td><%= prod.getCategoria().getDescricao()%></td>
+                <td><%= prod.getDataPostagemString()%></td>
             </tr>    
             <%
                     }
