@@ -46,7 +46,10 @@ public class LoginFiltro implements Filter {
 
     private boolean permitirAcesso(HttpServletRequest req) {
         String servletPath = req.getServletPath();
-        if (servletPath.equals("/Login")) {
+        if (servletPath.equals("/Login")
+                || servletPath.startsWith("/js/")
+                || servletPath.startsWith("/css/")
+                || servletPath.startsWith("/img/")) {
             return true;
         }
         return false;
